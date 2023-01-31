@@ -1,0 +1,49 @@
+// Recursion with binary search 
+class Solution {
+public:
+    int firstIndex(vector<int>& nums, int low,int high,int target,int left){
+        if(low>high){
+            return left;
+        }
+        int mid=low+(high-low)/2;
+        if (nums[mid]==target){
+            left=mid;
+            return firstIndex(nums,low,mid-1,target,left);
+        }
+        else if(nums[mid]<target){
+            return firstIndex(nums,mid+1,high,target,left);
+        }
+        else{
+            return firstIndex(nums,low,mid-1,target,left);
+        }
+        
+        return left;
+    }
+    int lastIndex(vector<int>& nums, int low,int high,int target,int right){
+        if(low>high){
+            return right;
+        }
+        int mid=low+(high-low)/2;
+        if (nums[mid]==target){
+            right=mid;             
+            return lastIndex(nums,mid+1,high,target,right);    
+        }
+        else if(nums[mid]<target){
+            return lastIndex(nums,mid+1,high,target,right);
+        }
+        else{
+            return lastIndex(nums,low,mid-1,target,right);
+            
+        }
+        
+        return right;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int low=0;
+        int high=nums.size()-1;
+        int left=-1,right=-1;
+        int leftPosition= firstIndex(nums,low,high,target,left);
+        int rightPosition= lastIndex(nums,low,high,target,right);
+        return {leftPosition,rightPosition};
+    }
+};

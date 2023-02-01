@@ -1,0 +1,28 @@
+*   QUESTION OF THIS CODE IS GIVEN ON CODESTUDIO https://www.codingninjas.com/codestudio/problems/check-palindrome_920555?leftPanelTab=0&utm_source=youtube&utm_medium=affiliate&utm_campaign=love_babbar_13
+
+#include <bits/stdc++.h> 
+bool palindrome ( vector<int>&a , int i , int j){
+	if( i >= j ){
+		return true;
+	}
+	if( a[i] != a[j]){
+		return false;
+	}
+	else{
+		// here there is pre increment done to avoid runtume error
+		return palindrome( a , ++i , --j );
+	}
+}
+
+bool checkPalindrome(long long N)
+{
+	// Write your code here.
+	vector<int> s;
+	while( N > 0){
+		s.push_back(N%2);
+		N = N / 2;
+		
+    }
+    reverse ( s.begin() , s.end());
+	return palindrome( s , 0 , s.size() - 1);
+}

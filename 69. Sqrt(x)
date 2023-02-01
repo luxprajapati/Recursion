@@ -1,0 +1,25 @@
+class Solution {
+public:
+long long int findSq(int x, int start, int end,int val){
+    long long int mid = start + (end-start)/2;
+
+    if(mid*mid == x) return mid;
+
+    if(start>end) return val;
+
+    else if(mid*mid<x){
+       val = mid;
+       return findSq(x,mid+1,end,val);
+   }
+   else{
+       return findSq(x,start,mid-1,val);
+   }
+}
+
+int mySqrt(int x) {
+   int start =0 ,end = x ,val =-1;
+   int ans = findSq(x,start,end,val);
+
+return ans;          
+}
+};

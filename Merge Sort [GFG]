@@ -1,0 +1,104 @@
+//{ Driver Code Starts
+#include <stdio.h>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+/* Function to print an array */
+void printArray(int arr[], int size)
+{
+    int i;
+    for (i=0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    void merge(int arr[], int l, int r)
+    {
+        int m = (l+r)/2 ;
+        int leftArray = m-l+1 ;
+        int rightArray = r-m ;
+        
+        // creating temp array 
+        int *first = new int[leftArray] ;
+        int *secound = new int[rightArray] ;
+        
+        // copy the data to the temp array
+        int mainArrayIndex = l ;
+        for(int i=0 ; i<leftArray;i++){
+            first[i] = arr[mainArrayIndex++] ;
+        }
+        
+        mainArrayIndex = m+1 ;
+        for (int i =0 ; i <rightArray ; i++) {
+            secound[i] = arr[mainArrayIndex++] ;
+        }
+        //initialize index of leftArray 
+        int index1 =0 ;
+        int index2 = 0;
+        mainArrayIndex = l ;
+        
+        while(index1 < leftArray && index2 < rightArray){
+            if(first[index1]<secound[index2]){
+                arr[mainArrayIndex++] = first[index1++];
+            }
+            else {
+                arr[mainArrayIndex++] = secound[index2++] ;
+            }
+        }
+        // Copy the remaing left part, if there is
+        while(index1<leftArray){
+            arr[mainArrayIndex++]= first[index1++];
+        }
+        // Copy the remaing right part, if there is 
+        while(index2<rightArray){
+            arr[mainArrayIndex++] = secound[index2++] ;
+        }
+        // delete the memory bcz dyanamic memory is used 
+        delete []first ;
+        delete []secound ;
+    }
+    public:
+    void mergeSort(int arr[], int l, int r)
+    {
+        if(l>=r)return ;
+        
+        int  m = (l+r)/2 ;
+        //left part sort karoo 
+        mergeSort(arr , l , m) ;
+        //right part sort karoo
+        mergeSort(arr , m+1 , r) ;
+        // merge kardo 
+        merge(arr , l , r) ;
+    }
+};
+
+//{ Driver Code Starts.
+
+
+int main()
+{
+    int n,T,i;
+
+    scanf("%d",&T);
+
+    while(T--){
+    
+    scanf("%d",&n);
+    int arr[n+1];
+    for(i=0;i<n;i++)
+      scanf("%d",&arr[i]);
+
+    Solution ob;
+    ob.mergeSort(arr, 0, n-1);
+    printArray(arr, n);
+    }
+    return 0;
+}
+// } Driver Code Ends

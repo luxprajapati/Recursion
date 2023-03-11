@@ -1,0 +1,30 @@
+class Solution {
+private :
+    void solve (vector<int>& nums , vector<vector<int>>& ans ,  int index){
+        // base case 
+        if(index >= nums.size()){
+            ans.push_back(nums);
+            return ;
+        }
+        
+        // These set will keep track of same num which is already taken at same position
+        unordered_set<int> s ;
+        for(int i = index ; i < nums.size() ; i++) {
+
+            if(s.find(nums[i]) != s.end()) continue ;
+            s.insert(nums[i]);
+
+            swap(nums[index] , nums[i]) ;
+            solve(nums , ans , index + 1) ;
+            // backtracking 
+            swap(nums[index] , nums[i]);
+        }
+    }
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ans ;
+        int index = 0 ;
+        solve (nums , ans , index) ;
+        return ans ;
+    }
+};
